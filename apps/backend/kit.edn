@@ -1,0 +1,8 @@
+{:full-name "ponchkee/backend"
+ :ns-name   "ponchkee.backend"
+ :sanitized "ponchkee/backend"
+ :name      "backend"
+ :modules   {:root         "modules"
+             :repositories [{:url  "https://github.com/kit-clj/modules.git"
+                             :tag  "master"
+                             :name "kit-modules"}]}}
