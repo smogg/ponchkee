@@ -23,15 +23,6 @@ export function Navigation() {
           </Link>
           <nav className="flex items-center gap-4 text-sm lg:gap-6">
             <Link
-              to="/dashboard"
-              className="transition-colors hover:text-foreground/80 text-muted-foreground"
-              activeProps={{
-                className: 'text-foreground font-medium',
-              }}
-            >
-              Dashboard
-            </Link>
-            <Link
               to="/leads"
               className="transition-colors hover:text-foreground/80 text-muted-foreground"
             >
