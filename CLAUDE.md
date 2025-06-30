@@ -45,6 +45,7 @@ npm run build     # Build static site
 
 ### Required Tools
 - Node.js 18+ (uses pnpm package manager)
+- Always use pnpm!
 
 ### Environment Variables
 - `VITE_CLERK_PUBLISHABLE_KEY`: Clerk authentication key
