@@ -2,6 +2,7 @@ import { createServerFileRoute } from '@tanstack/react-start/server'
 import { getRequestHeaders } from '@tanstack/react-start/server'
 import { createMiddleware, json } from '@tanstack/react-start'
 import type { User } from '~/utils/users'
+import { authMiddleware } from '~/lib/auth'
 
 const userLoggerMiddleware = createMiddleware({ type: 'request' }).server(
   async ({ next, request }) => {
@@ -14,39 +15,13 @@ const userLoggerMiddleware = createMiddleware({ type: 'request' }).server(
   },
 )
 
-const testParentMiddleware = createMiddleware({ type: 'request' }).server(
-  async ({ next, request }) => {
-    console.info('In: testParentMiddleware')
-    const result = await next()
-    result.response.headers.set('x-test-parent', 'true')
-    console.info('Out: testParentMiddleware')
-    return result
-  },
-)
-
-const testMiddleware = createMiddleware({ type: 'request' })
-  .middleware([testParentMiddleware])
-  .server(async ({ next, request }) => {
-    console.info('In: testMiddleware')
-    const result = await next()
-    result.response.headers.set('x-test', 'true')
-
-    // if (Math.random() > 0.5) {
-    //   throw new Response(null, {
-    //     status: 302,
-    //     headers: { Location: 'https://www.google.com' },
-    //   })
-    // }
-
-    console.info('Out: testMiddleware')
-    return result
-  })
 
 export const ServerRoute = createServerFileRoute('/api/users')
-  .middleware([testMiddleware, userLoggerMiddleware, testParentMiddleware])
+  .middleware([authMiddleware, userLoggerMiddleware])
   .methods({
-    GET: async ({ request }) => {
+    GET: async ({ request, context }) => {
       console.info('GET /api/users @', request.url)
+      console.info('Authenticated user:', context.userId)
       console.info('Fetching users... @', request.url)
       const res = await fetch('https://jsonplaceholder.typicode.com/users')
       if (!res.ok) {
