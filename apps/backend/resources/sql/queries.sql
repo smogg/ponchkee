@@ -1,1 +1,0 @@
--- Place your queries here. Docs available https://www.hugsql.org/
